@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trivia Lens™ — brings the game show into focus</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- THE FAMILY GLASS, TRIVIA'S WAY: the brass magnifying glass with a question mark
+     glowing at its center — the lens that asks. One symbol everywhere the glass appears. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="glassFill" cx="38%" cy="34%" r="80%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".92"/>
+      <stop offset="55%" stop-color="#dcebf5" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#b9d2e4" stop-opacity=".35"/>
+    </radialGradient>
+    <linearGradient id="brassGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0d98c"/><stop offset="45%" stop-color="#d4af37"/><stop offset="100%" stop-color="#9a7b24"/>
+    </linearGradient>
+    <radialGradient id="wheelSheen" cx="35%" cy="28%" r="85%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity=".30"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity=".05"/>
+      <stop offset="72%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity=".24"/>
+    </radialGradient>
+    <symbol id="glassQuiz" viewBox="0 0 120 120">
+      <g transform="translate(86 86) rotate(45)"><rect x="-4" y="-6" width="46" height="12" rx="6" fill="url(#brassGrad)" stroke="#8a6d1c" stroke-width="1"/></g>
+      <circle cx="46" cy="46" r="30" fill="url(#glassFill)"/>
+      <circle cx="46" cy="46" r="30" fill="none" stroke="url(#brassGrad)" stroke-width="6.5"/>
+      <circle cx="46" cy="46" r="24.5" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.2"/>
+      <text x="46" y="60" text-anchor="middle" font-family="Impact, 'Arial Black', sans-serif" font-size="34" fill="#f2a93b" stroke="#0d1526" stroke-width=".6">?</text>
+      <ellipse cx="35" cy="34" rx="8" ry="5" fill="rgba(255,255,255,.55)" transform="rotate(-32 35 34)"/>
+    </symbol>
+  </defs>
+</svg>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="stage-beams" aria-hidden="true"><i class="beam b1"></i><i class="beam b2"></i><i class="beam b3"></i></div>
+
+<div class="app" id="appRoot">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="rings" width="46" height="46" viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="19" cy="24" r="13" fill="none" stroke="#d4af37" stroke-width="2.6"/>
+        <circle cx="29" cy="24" r="13" fill="none" stroke="#e8cf7a" stroke-width="2.6"/>
+        <circle cx="24" cy="24" r="3.4" fill="#fff3c4"/>
+        <path d="M24 15 L25.4 22.6 L33 24 L25.4 25.4 L24 33 L22.6 25.4 L15 24 L22.6 22.6 Z" fill="#d4af37" opacity="0.9"/>
+      </svg>
+      <div class="brandtext">
+        <div class="wordmark marquee-word"><span class="wm-nm">Trivia</span> Lens<sup>™</sup></div>
+        <div class="brandsub">brings the game show into focus</div>
+      </div>
+    </div>
+    <div class="topmeta">
+      <div class="house-line">Part of the <strong>Lens</strong> family — Life in focus</div>
+      <div class="copy-line">© 2026 Trivia Lens™ · Prototype — everything lives on this device</div>
+    </div>
+    <button class="family-btn" id="familyGlassBtn" aria-expanded="false" title="The magnifying glass is the link to the whole product line">
+      <svg class="glass-sm" viewBox="0 0 120 120" aria-hidden="true"><use href="#glassQuiz"/></svg>
+      <span>The Lens family</span>
+    </button>
+  </header>
+
+  <div class="family-panel" id="familyPanel" hidden>
+    <p class="family-intro">One family, many lenses — every app its own world, all of them <strong>Life in focus</strong>. The glass that asks the questions is kin to these:</p>
+    <div class="family-grid">
+      <span class="family-item here"><b class="sig sig-trivia"><span class="sig-nm">Trivia</span> <span class="sig-ln">Lens</span></b><i>you're here — the game that lives in a marquee</i></span>
+      <a class="family-item" href="https://tariff-lens.netlify.app" target="_blank" rel="noopener"><b class="sig sig-tariff"><span class="sig-nm">Tariff</span> <span class="sig-ln">Lens</span></b><i>live — any price, split: product, tariff, markup</i></a>
+      <a class="family-item" href="https://pharmacy-lens.netlify.app" target="_blank" rel="noopener"><b class="sig sig-pharmacy"><span class="sig-nm">Pharmacy</span> <span class="sig-ln">Lens</span></b><i>live — medications, labels, and prices</i></a>
+      <a class="family-item" href="https://trail-lens.netlify.app" target="_blank" rel="noopener"><b class="sig sig-trail"><span class="sig-nm">Trail</span> <span class="sig-ln">Lens</span></b><i>live — trails, walks, and flags planted</i></a>
+      <a class="family-item" href="https://holy-lens.netlify.app" target="_blank" rel="noopener"><b class="sig sig-holy"><span class="sig-nm">Holy</span> <span class="sig-ln">Lens</span></b><i>live — scripture for every day</i></a>
+      <span class="family-item soon"><b class="sig sig-cuisine"><span class="sig-nm">Cuisine</span> <span class="sig-ln">Lens</span></b><i>full prototype built — your kitchen, in focus</i></span>
+      <span class="family-item soon"><b class="sig sig-trainer"><span class="sig-nm">Trainer</span> <span class="sig-ln">Lens</span></b><i>full prototype built — your body, in focus</i></span>
+      <span class="family-item soon"><b class="sig sig-vitamin"><span class="sig-nm">Vitamin</span> <span class="sig-ln">Lens</span></b><i>full prototype built — labels, stacks, and what's really in it</i></span>
+      <span class="family-item soon"><b class="sig sig-paystub"><span class="sig-nm">Pay Stub / Tax</span> <span class="sig-ln">Lens</span></b><i>full prototype built — pay stubs and W-2s, read plain</i></span>
+      <span class="family-item soon"><b class="sig sig-election"><span class="sig-nm">Election</span> <span class="sig-ln">Lens</span></b><i>full prototype built — ballots, dates, and what's on yours</i></span>
+      <span class="family-item soon"><b class="sig sig-label"><span class="sig-nm">Label</span> <span class="sig-ln">Lens</span></b><i>full prototype built — the dive-deeper, growing up</i></span>
+      <span class="family-item soon"><b class="sig sig-party"><span class="sig-nm">Party</span> <span class="sig-ln">Lens</span></b><i>full prototype built — games for the room you're in</i></span>
+      <span class="family-item soon"><b class="sig sig-mirror"><span class="sig-nm">Mirror</span> <span class="sig-ln">Lens</span></b><i>full prototype built — your skin, kept as evidence, not verdicts</i></span>
+      <span class="family-item soon"><b class="sig sig-news"><span class="sig-nm">News</span> <span class="sig-ln">Lens</span></b><i>full prototype built — every side, in focus</i></span>
+    </div>
+  </div>
+
+  <!-- TONIGHT AT THE MARQUEE — the living wire -->
+  <div class="wire" id="tickerBar" title="Tonight at the Marquee — the trivia wire">
+    <span class="wire-label">✦ TONIGHT AT THE MARQUEE</span>
+    <div class="wire-track"><span class="wire-text" id="tickerText"></span></div>
+    <span class="wire-tag">Prototype feed — Sample items, refreshed by the morning briefing scan</span>
+    <button class="wire-pause" id="tickerPause" title="Pause the wire">❚❚</button>
+  </div>
+
+  <!-- THE MARQUEE — title screen -->
+  <section class="marquee-hero" id="marqueeHero">
+    <div class="lens-mark" aria-hidden="true"><span>?</span></div>
+    <div class="bulbs" id="bulbsTop" aria-hidden="true"></div>
+    <h1 class="marquee-title">TRIVIA <span>LENS</span></h1>
+    <div class="bulbs" id="bulbsBottom" aria-hidden="true"></div>
+    <p class="hook">Think you <em>know?</em></p>
+    <p class="tagline">Step up. Fresh questions every game — the cards never run out, and somebody in the room is going down.</p>
+    <div class="teaser" id="teaser"><small>❓ <span class="tq" id="teaserQ">How many hearts does an octopus have?</span> &nbsp;—&nbsp; no answers up here. You have to play.</small></div>
+  </section>
+
+  <nav class="tabs" id="mainTabs">
+    <button class="tab active" data-view="stage">🎤 The Stage</button>
+    <button class="tab" data-view="wheel">🎡 The Wheel</button>
+    <button class="tab" data-view="badges">🏅 Badge Case</button>
+    <button class="tab" data-view="settings">⚙️ Settings</button>
+  </nav>
+
+  <main class="stage-surface">
+    <!-- ============ THE STAGE ============ -->
+    <section class="view active" id="view-stage">
+      <section id="setup" class="card">
+        <div id="challengeBanner" class="banner hidden"></div>
+        <h2>🎤 Step up to the podium</h2>
+        <p class="sub">Solo — take on the board and earn your grade under the lights. Party — pass the phone and race your crew to the top. Or let <button class="linklike" data-goto="wheel">the Wheel</button> pick the arena for you.</p>
+        <!-- RESTYLE 2026-10-27: the hype strip — a mini prize wheel that never stops
+             spinning beside a ribbon of topics flowing through the marquee. Topics are
+             FLUID here: they stream, spin, and rotate in — nothing on this stage sits fixed. -->
+        <div class="hype-strip" aria-hidden="true">
+          <div class="mini-wheel"><span class="mini-hub">?</span></div>
+          <div class="topic-flow">
+            <div class="topic-lab">In rotation<br>at the marquee</div>
+            <div class="topic-window">
+            <div class="topic-track">
+              <span>🎬 Blockbuster Moments</span><i>✦</i><span>🎵 Chart-Toppers</span><i>✦</i><span>🏆 Playoff Lore</span><i>✦</i><span>🧬 The Human Body</span><i>✦</i><span>⚗️ Element Mysteries</span><i>✦</i><span>🏛️ Founding Moments</span><i>✦</i><span>🌊 Ocean Life</span><i>✦</i><span>🚀 Space Firsts</span><i>✦</i><span>🍿 Movie Quotes</span><i>✦</i><span>💡 Wild Inventions</span><i>✦</i><span>🗺️ World Landmarks</span><i>✦</i><span>🎮 Game Legends</span><i>✦</i>
+              <span>🎬 Blockbuster Moments</span><i>✦</i><span>🎵 Chart-Toppers</span><i>✦</i><span>🏆 Playoff Lore</span><i>✦</i><span>🧬 The Human Body</span><i>✦</i><span>⚗️ Element Mysteries</span><i>✦</i><span>🏛️ Founding Moments</span><i>✦</i><span>🌊 Ocean Life</span><i>✦</i><span>🚀 Space Firsts</span><i>✦</i><span>🍿 Movie Quotes</span><i>✦</i><span>💡 Wild Inventions</span><i>✦</i><span>🗺️ World Landmarks</span><i>✦</i><span>🎮 Game Legends</span><i>✦</i>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="lbl">Mode</div>
+        <div class="seg" id="modeSeg">
+          <button data-mode="solo" class="on">📚 Solo Study</button>
+          <button data-mode="party">🎉 Party</button>
+        </div>
+        <div id="partyOpts" class="hidden">
+          <div class="lbl">Players (2–4)</div>
+          <div class="players" id="playerInputs">
+            <input id="p1" value="Player 1" maxlength="16" aria-label="Player 1 name">
+            <input id="p2" value="Player 2" maxlength="16" aria-label="Player 2 name">
+            <input id="p3" value="Player 3" maxlength="16" class="hidden" aria-label="Player 3 name">
+            <input id="p4" value="Player 4" maxlength="16" class="hidden" aria-label="Player 4 name">
+          </div>
+          <div class="seg" id="countSeg">
+            <button data-n="2" class="on">2 players</button>
+            <button data-n="3">3</button>
+            <button data-n="4">4</button>
+          </div>
+          <div class="lbl">Race to</div>
+          <div class="seg" id="targetSeg">
+            <button data-t="30">30 pts</button>
+            <button data-t="50" class="on">50 pts</button>
+            <button data-t="100">100 pts</button>
+          </div>
+        </div>
+        <div class="lbl">👥 Who's playing?</div>
+        <div class="seg" id="ageSeg">
+          <button data-age="kids">8–12</button>
+          <button data-age="teen" class="on">13–17</button>
+          <button data-age="adult">18+</button>
+          <button data-age="mixed">Mixed ages</button>
+        </div>
+        <p class="sub" id="ageNote" style="margin-top:9px;">Teen room: today's artists, games, and stars — pitched at high school, with Expert for the stretch. No 1950s deep cuts.</p>
+        <div class="lbl">Category — pick your arena, chase the wedge</div>
+        <div class="chips" id="catChips"></div>
+        <div class="lbl">Level</div>
+        <div class="chips" id="lvlChips">
+          <button class="chip" data-lvl="Middle School">🎒 Middle School</button>
+          <button class="chip on" data-lvl="High School">🎓 High School</button>
+          <button class="chip" data-lvl="Expert">🧠 Expert</button>
+        </div>
+        <button class="bigbtn" id="startBtn">🎬 Take the Stage</button>
+        <button class="ghostbtn" id="dailyBtn">📅 Tonight's Daily Challenge</button>
+        <button class="ghostbtn" id="wheelBtnSetup">🎡 Let the Wheel decide</button>
+      </section>
+
+      <section id="game" class="card hidden">
+        <div class="meta"><span id="gMeta"></span><span id="gScore"></span></div>
+        <div class="timerbar"><i id="gTimer"></i></div>
+        <div class="bar"><i id="gBar"></i></div>
+        <div id="turnLine" class="turn"></div>
+        <div id="streakLine" class="streak"></div>
+        <div class="qtype" id="gType"></div>
+        <div class="q" id="gQ"></div>
+        <div class="answers" id="gAns"></div>
+        <div class="lifelines" id="lifeRow">
+          <button id="life5050">✂️ 50 : 50</button>
+          <button id="lifeSkip">⏭️ Skip</button>
+        </div>
+        <div id="gWhy" class="why hidden"></div>
+        <button class="bigbtn hidden" id="nextBtn">Next</button>
+        <div class="scoreboard" id="board"></div>
+      </section>
+
+      <section id="results" class="card hidden">
+        <div id="resBody"></div>
+        <button class="bigbtn" id="againBtn">Play Again</button>
+        <button class="ghostbtn hidden" id="challengeBtn">⚔️ Challenge a Friend</button>
+        <button class="ghostbtn" id="shareBtn">📋 Copy My Result</button>
+        <button class="bigbtn alt" id="newBtn">New Setup</button>
+      </section>
+
+      <section class="card record-card">
+        <h3 class="card-h">🎟️ Your marquee record</h3>
+        <div class="record-grid" id="recordGrid"></div>
+        <div id="historyList"></div>
+      </section>
+    </section>
+
+    <!-- ============ THE WHEEL ============ -->
+    <section class="view" id="view-wheel">
+      <div class="viewhead">
+        <h2 class="stage-h">The Wheel picks the arena.</h2>
+        <p class="sub">Built for the room: one spin, and whatever arena the pointer lands on deals the next round — at the level set on the Stage. The gold wedge is <strong>House Choice</strong>: the room votes, then plays. Solo players can spin too — let fate decide.</p>
+      </div>
+      <div class="card wheel-card">
+        <div class="wheel-stage">
+          <div class="wheel-pointer" aria-hidden="true">▼</div>
+          <svg id="wheelSvg" viewBox="0 0 320 320" role="img" aria-label="Category wheel with six arenas plus House Choice"></svg>
+          <div class="wheel-hub" aria-hidden="true">?</div>
+        </div>
+        <div class="wheel-result" id="wheelResult" aria-live="polite">The wheel is waiting. Give it a spin.</div>
+        <div class="house-picker hidden" id="housePicker">
+          <p class="sub">⭐ <strong>House Choice!</strong> The room votes — tap the arena you play:</p>
+          <div class="chips" id="houseChips"></div>
+        </div>
+        <button class="bigbtn" id="spinBtn">🎡 SPIN</button>
+        <button class="bigbtn hidden" id="playWheelBtn">▶ Play this arena</button>
+        <p class="hint">Spins so far: <b id="wheelSpinCount">0</b> · Wheel rounds played: <b id="wheelRoundCount">0</b>. The wheel changes <em>how</em> the category is chosen — never the banks, the scoring, or the no-repeat rule.</p>
+        <div id="wheelHistory"></div>
+      </div>
+    </section>
+
+    <!-- ============ BADGES ============ -->
+    <section class="view" id="view-badges">
+      <div class="viewhead">
+        <h2 class="stage-h">The Badge Case</h2>
+        <p class="sub">Honors you earn under the lights — never bought, never random. Each one certifies a round you actually played, counted from your own on-device record.</p>
+      </div>
+      <div class="badgegrid" id="badgeGrid"></div>
+      <div class="card lensers-card" id="lensersCard">
+        <h3 class="card-h">Lensers leagues — <span class="later-tag">Later</span></h3>
+        <div id="lensersBody"></div>
+      </div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section class="view" id="view-settings">
+      <div class="viewhead">
+        <h2 class="stage-h">Settings</h2>
+        <p class="sub">Trivia Lens remembers your setup on this device, so the marquee is lit the way you left it.</p>
+      </div>
+      <div class="card settings-card">
+        <label>Your stage name <span class="set-note">used on challenge links and your record</span>
+          <input type="text" id="setName" maxlength="24" placeholder="e.g. Scott"></label>
+        <div class="lbl">Default level <span class="set-note">the level the Stage opens on</span></div>
+        <div class="seg" id="setLvlSeg">
+          <button data-lvl="Middle School">🎒 Middle School</button>
+          <button data-lvl="High School" class="on">🎓 High School</button>
+          <button data-lvl="Expert">🧠 Expert</button>
+        </div>
+        <label class="toggle-row">Wheel tick sounds
+          <span class="set-note">a soft tick as each wedge passes the pointer — your browser may keep it quiet until you tap</span>
+          <input type="checkbox" id="setSound"></label>
+        <label class="toggle-row">Lensers presence (opt-in)
+          <span class="set-note">Off by default, always. Turning it on only previews the league shape in the Badge Case — in this prototype every other Lenser shown is tagged Sample, and nothing leaves this device.</span>
+          <input type="checkbox" id="setLensers"></label>
+      </div>
+      <div class="card settings-card">
+        <h3 class="card-h">Your data</h3>
+        <p class="hint">Everything — settings, records, badges, history — lives in this browser on this device (localStorage). No account, no upload.</p>
+        <div class="row-actions">
+          <button class="btn" id="btnExport">Export my record (JSON)</button>
+          <button class="btn btn-danger-ghost" id="btnClear">Clear my trivia data</button>
+        </div>
+        <pre class="export-box" id="exportBox" hidden></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fineprint">
+    <p><strong>Trivia Lens™</strong> · Part of the Lens family · “Life in focus.” Our oath: not only to do no harm, but also to do better.</p>
+    <p>Questions are an education-and-entertainment bank (216 multiple-choice + 36 fill-in-the-blank) carried from the verified v1.3 build. The Tonight at the Marquee wire is a prototype feed — its items are community-report shapes tagged Sample, never live scores. Badges are honors only: never cash, never redeemable, never wagered. Sample Lensers teach the shape of a future league; they never impersonate a living crowd.</p>
+    <p>© 2026 Trivia Lens™. ™ claimed on use; ® is never used until a mark is registered.</p>
+  </footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
