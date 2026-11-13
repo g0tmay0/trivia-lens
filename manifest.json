@@ -1,0 +1,30 @@
+{
+  "name": "Trivia Lens \u2014 brings the game show into focus",
+  "short_name": "Trivia Lens",
+  "description": "Spin the wheel, take the stage, and chase your best streak under the marquee. Solo play, party mode, daily challenges, lifelines, streaks and challenge links \u2014 records live on your device.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1526",
+  "theme_color": "#0d1526",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
